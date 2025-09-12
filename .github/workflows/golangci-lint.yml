@@ -5,6 +5,7 @@ on:
       - "modifier/**.go"
       - "modifier/go.mod"
       - "modifier/go.sum"
+      - "modifier/.golangci.yml"
   pull_request:
   workflow_dispatch:
 permissions:
