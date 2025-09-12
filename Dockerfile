@@ -5,7 +5,7 @@ ENV CGO_ENABLED=0
 RUN go build -a -o modifier -ldflags="-s -w" -trimpath
 
 FROM ubuntu:latest AS builder
-RUN apt update && apt install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
   git \
   build-essential
 RUN git clone --depth 1 git://busybox.net/busybox.git /opt/busybox
