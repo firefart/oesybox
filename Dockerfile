@@ -1,7 +1,8 @@
 FROM golang:latest AS go-builder
 WORKDIR /go/src/app
-COPY modifier/ .
-RUN CGO_ENABLED=0 go build -a -o modifier .
+COPY modifier/go.* modifier/*.go /go/src/app/
+ENV CGO_ENABLED=0
+RUN go build -a -o modifier -ldflags="-s -w" -trimpath
 
 FROM ubuntu:latest AS builder
 RUN apt update && apt install -y \
@@ -16,6 +17,7 @@ RUN /opt/modifier -path /opt/busybox
 RUN make defconfig && \
   sed -i 's/CONFIG_TC=y/# CONFIG_TC is not set/' .config && \
   sed -i 's/# CONFIG_STATIC is not set/CONFIG_STATIC=y/' .config && \
+  #cat .config && \
   make -j$(nproc)
 
 FROM scratch
