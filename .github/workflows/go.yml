@@ -1,0 +1,32 @@
+name: Go
+on:
+  push:
+    paths:
+      - "modifier/**.go"
+      - "modifier/go.mod"
+      - "modifier/go.sum"
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    name: Build
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v5
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Build
+        run: go build
+        working-directory: ./modifier
+
+      - name: Test
+        run: go test -v ./...
+        working-directory: ./modifier
