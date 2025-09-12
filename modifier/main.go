@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"errors"
 	"flag"
 	"fmt"
 	"io/fs"
@@ -204,16 +205,21 @@ var mapping = map[string]string{
 }
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	pathIn := flag.String("path", "", "path to the directory to scan")
 	flag.Parse()
 	if *pathIn == "" {
-		fmt.Println("Please provide a valid path using the -path flag.")
-		return
+		return errors.New("please provide a valid path using the -path flag")
 	}
 
 	err := filepath.Walk(*pathIn, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
-			fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
 			return err
 		}
 		if info.IsDir() && info.Name() == ".git" {
@@ -221,14 +227,17 @@ func main() {
 		}
 		ext := filepath.Ext(path)
 		if !info.IsDir() && (ext == ".c" || ext == ".h") {
-			processFile(path)
+			if err := processFile(path); err != nil {
+				return fmt.Errorf("error processing file %q: %w", path, err)
+			}
 		}
 		return nil
 	})
 	if err != nil {
-		fmt.Printf("error walking the path %q: %v\n", ".", err)
-		return
+		return fmt.Errorf("error walking the path %q: %w", ".", err)
 	}
+
+	return nil
 }
 
 func processFile(path string) error {
@@ -263,10 +272,10 @@ func processFile(path string) error {
 	}
 
 	if err := scanner.Err(); err != nil {
-		fmt.Printf("error occurred: %v\n", err)
+		return fmt.Errorf("error occurred: %w", err)
 	}
 
-	if err := os.WriteFile(path, newContents, 0644); err != nil {
+	if err := os.WriteFile(path, newContents, 0644); err != nil { // nolint:gosec
 		return err
 	}
 
@@ -286,9 +295,9 @@ func process(path string, line string, r *regexp.Regexp) string {
 			//applet:IF_ID(    APPLET_NOEXEC(id,     id, BB_DIR_USR_BIN, BB_SUID_DROP, id    ))
 			// where groups reference id
 			if original == "groups" {
-				new, ok := mapping["id"]
+				newKeyword, ok := mapping["id"]
 				if ok {
-					suffix = strings.ReplaceAll(suffix, ", id,", fmt.Sprintf(", %s,", new))
+					suffix = strings.ReplaceAll(suffix, ", id,", fmt.Sprintf(", %s,", newKeyword))
 				}
 			}
 
@@ -298,10 +307,10 @@ func process(path string, line string, r *regexp.Regexp) string {
 			//applet:IF_KILLALL( APPLET_NOFORK(killall,  kill, BB_DIR_USR_BIN,  BB_SUID_DROP, killall))
 			//applet:IF_KILLALL5(APPLET_NOFORK(killall5, kill, BB_DIR_USR_SBIN, BB_SUID_DROP, killall5))
 			if original == "killall" || original == "killall5" {
-				new, ok := mapping["kill"]
+				newKeyword, ok := mapping["kill"]
 				if ok {
-					suffix = strings.ReplaceAll(suffix, ", kill,", fmt.Sprintf(", %s,", new))
-					suffix = strings.ReplaceAll(suffix, ",  kill,", fmt.Sprintf(", %s,", new))
+					suffix = strings.ReplaceAll(suffix, ", kill,", fmt.Sprintf(", %s,", newKeyword))
+					suffix = strings.ReplaceAll(suffix, ",  kill,", fmt.Sprintf(", %s,", newKeyword))
 				}
 			}
 
@@ -309,9 +318,9 @@ func process(path string, line string, r *regexp.Regexp) string {
 			//applet:IF_EGREP(APPLET_ODDNAME(egrep, grep, BB_DIR_BIN, BB_SUID_DROP, egrep))
 			//applet:IF_FGREP(APPLET_ODDNAME(fgrep, grep, BB_DIR_BIN, BB_SUID_DROP, fgrep))
 			if original == "egrep" || original == "fgrep" {
-				new, ok := mapping["grep"]
+				newKeyword, ok := mapping["grep"]
 				if ok {
-					suffix = strings.ReplaceAll(suffix, ", grep,", fmt.Sprintf(", %s,", new))
+					suffix = strings.ReplaceAll(suffix, ", grep,", fmt.Sprintf(", %s,", newKeyword))
 				}
 			}
 
@@ -321,11 +330,11 @@ func process(path string, line string, r *regexp.Regexp) string {
 				suffix = r2.ReplaceAllString(suffix, fmt.Sprintf(", %s", newName))
 
 				modifiedLine := prefix + newName + suffix
-				fmt.Printf("%s: %s\n", path, modifiedLine)
+				fmt.Printf("%s: %s\n", path, modifiedLine) // nolint:forbidigo
 				return modifiedLine
 			}
-			fmt.Printf("%s: %s\n", path, prefix+original+suffix)
-			return prefix + original + suffix // return maybe modified suffix
+			fmt.Printf("%s: %s\n", path, prefix+original+suffix) // nolint:forbidigo
+			return prefix + original + suffix                    // return maybe modified suffix
 		}
 		return match
 	})
