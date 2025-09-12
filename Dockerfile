@@ -18,8 +18,21 @@ RUN make defconfig && \
   sed -i 's/CONFIG_TC=y/# CONFIG_TC is not set/' .config && \
   sed -i 's/# CONFIG_STATIC is not set/CONFIG_STATIC=y/' .config && \
   #cat .config && \
-  make -j$(nproc)
+  cat procps/kill.c && \
+  #make -j$(nproc)
+  make
+
+FROM ubuntu:latest AS rootfs
+RUN mkdir /rootfs && \
+  mkdir /rootfs/bin && \
+  mkdir /rootfs/etc && \
+  mkdir /rootfs/root && \
+  echo "root:x:0:0:root:/root:/bin/sh" > /rootfs/etc/passwd && \
+  echo "root:x:0:" > /rootfs/etc/group
 
 FROM scratch
-COPY --from=builder /opt/busybox/busybox /busybox
-ENTRYPOINT ["/busybox"]
+# FROM debian:stable-slim
+COPY --from=rootfs /rootfs/ /
+COPY --from=builder /opt/busybox/busybox /bin
+RUN ["/bin/busybox", "--install", "-s", "/bin"]
+ENTRYPOINT ["/bin/busybox", "ash"]
