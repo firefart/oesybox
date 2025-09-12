@@ -50,7 +50,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le
           tags: |
             firefart/oesybox:latest
             ghcr.io/firefart/oesybox:latest
