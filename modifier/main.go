@@ -29,8 +29,9 @@ var regexUsage = regexp.MustCompile(`^(\s*//usage:#define )([a-z0-9]+)(_[a-z0-9]
 // int id_main(int argc UNUSED_PARAM, char **argv)
 // int blkid_main(int argc, char **argv) MAIN_EXTERNALLY_VISIBLE;
 // int blkid_main(int argc UNUSED_PARAM, char **argv)
-// ret = run_applet_main(argv, kill_main);
 var regexMain = regexp.MustCompile(`^(.+?)([a-z0-9]+)(_main\s*\(.+)$`)
+
+// ret = run_applet_main(argv, kill_main);
 var regexMain2 = regexp.MustCompile(`^(.+run_applet_main\(\w+, )([a-z0-9]+)(_main\);)$`)
 
 var regexBuiltIn = regexp.MustCompile(`^(.*BLTIN\(")([a-z0-9]+)(".+)$`)
@@ -312,34 +313,30 @@ func process(path string, line string, r *regexp.Regexp) string {
 			original := matches[2] // The original name (first capture group)
 			suffix := matches[3]   // Everything after the name
 
-			// handle special case of
-			//applet:IF_GROUPS(APPLET_NOEXEC(groups, id, BB_DIR_USR_BIN, BB_SUID_DROP, groups))
-			//applet:IF_ID(    APPLET_NOEXEC(id,     id, BB_DIR_USR_BIN, BB_SUID_DROP, id    ))
-			// where groups reference id
-			if original == "groups" {
+			// handle special case where another command is a variation of the main command
+			// and references it in the parameters. As we only process one line per default,
+			// these need to be handled here.
+			switch original {
+			case "groups":
+				//applet:IF_GROUPS(APPLET_NOEXEC(groups, id, BB_DIR_USR_BIN, BB_SUID_DROP, groups))
+				//applet:IF_ID(    APPLET_NOEXEC(id,     id, BB_DIR_USR_BIN, BB_SUID_DROP, id    ))
 				newKeyword, ok := mapping["id"]
 				if ok {
 					suffix = strings.ReplaceAll(suffix, ", id,", fmt.Sprintf(", %s,", newKeyword))
 				}
-			}
-
-			// handle special case
-			//applet:IF_KILL(    APPLET_NOFORK(kill,     kill, BB_DIR_BIN,      BB_SUID_DROP, kill))
-			//                   APPLET_NOFORK:name      main  location         suid_type     help
-			//applet:IF_KILLALL( APPLET_NOFORK(killall,  kill, BB_DIR_USR_BIN,  BB_SUID_DROP, killall))
-			//applet:IF_KILLALL5(APPLET_NOFORK(killall5, kill, BB_DIR_USR_SBIN, BB_SUID_DROP, killall5))
-			if original == "killall" || original == "killall5" {
+			case "killall", "killall5":
+				//applet:IF_KILL(    APPLET_NOFORK(kill,     kill, BB_DIR_BIN,      BB_SUID_DROP, kill))
+				//                   APPLET_NOFORK:name      main  location         suid_type     help
+				//applet:IF_KILLALL( APPLET_NOFORK(killall,  kill, BB_DIR_USR_BIN,  BB_SUID_DROP, killall))
+				//applet:IF_KILLALL5(APPLET_NOFORK(killall5, kill, BB_DIR_USR_SBIN, BB_SUID_DROP, killall5))
 				newKeyword, ok := mapping["kill"]
 				if ok {
 					suffix = strings.ReplaceAll(suffix, ", kill,", fmt.Sprintf(", %s,", newKeyword))
 					suffix = strings.ReplaceAll(suffix, ",  kill,", fmt.Sprintf(", %s,", newKeyword))
 				}
-			}
-
-			// handle special case
-			//applet:IF_EGREP(APPLET_ODDNAME(egrep, grep, BB_DIR_BIN, BB_SUID_DROP, egrep))
-			//applet:IF_FGREP(APPLET_ODDNAME(fgrep, grep, BB_DIR_BIN, BB_SUID_DROP, fgrep))
-			if original == "egrep" || original == "fgrep" {
+			case "egrep", "fgrep":
+				//applet:IF_EGREP(APPLET_ODDNAME(egrep, grep, BB_DIR_BIN, BB_SUID_DROP, egrep))
+				//applet:IF_FGREP(APPLET_ODDNAME(fgrep, grep, BB_DIR_BIN, BB_SUID_DROP, fgrep))
 				newKeyword, ok := mapping["grep"]
 				if ok {
 					suffix = strings.ReplaceAll(suffix, ", grep,", fmt.Sprintf(", %s,", newKeyword))
