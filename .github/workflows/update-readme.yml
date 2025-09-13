@@ -1,0 +1,51 @@
+name: Update README
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+concurrency:
+  group: readme-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update_readme:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: checkout sources
+        uses: actions/checkout@v5
+
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Readme
+        run: task update-readme
+
+      - name: Config git
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: Commit changes
+        shell: bash --noprofile --norc -o pipefail {0}
+        run: |
+          git diff-index --quiet HEAD --
+          exit_status=$?
+          if [ $exit_status -eq 0 ]; then
+            echo "nothing has changed"
+          else
+            git add Readme.md
+            git commit -m "auto update from github actions"
+            git push origin main
+          fi

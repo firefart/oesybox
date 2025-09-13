@@ -5,3 +5,15 @@ tasks:
     cmds:
       - docker build --pull -t test -f Dockerfile .
       - docker run --rm -it --entrypoint=/bin/busybox test
+
+  install-gomplate:
+    cmds:
+      - go install github.com/hairyhenderson/gomplate/v4/cmd/gomplate@latest
+
+  update-readme:
+    deps: [install-gomplate]
+    cmds:
+      - docker build --pull -t oesybox-readme -f Dockerfile .
+      - docker run --rm -i --entrypoint=/bin/busybox oesybox-readme --help >> out.txt
+      - gomplate -f Readme.t -o Readme.md
+      - rm -f out.txt
