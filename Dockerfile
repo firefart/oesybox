@@ -18,9 +18,7 @@ RUN make defconfig && \
   sed -i 's/CONFIG_TC=y/# CONFIG_TC is not set/' .config && \
   sed -i 's/# CONFIG_STATIC is not set/CONFIG_STATIC=y/' .config && \
   #cat .config && \
-  cat procps/kill.c && \
-  #make -j$(nproc)
-  make
+  make -j$(nproc)
 
 FROM ubuntu:latest AS rootfs
 RUN mkdir /rootfs && \
