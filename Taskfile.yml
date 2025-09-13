@@ -14,6 +14,6 @@ tasks:
     deps: [install-gomplate]
     cmds:
       - docker build --pull -t oesybox-readme -f Dockerfile .
-      - docker run --rm -i --entrypoint=/bin/busybox oesybox-readme --help >> out.txt
+      - docker run --rm -i --entrypoint=/bin/busybox oesybox-readme --help > out.txt
       - gomplate -f Readme.t -o Readme.md
       - rm -f out.txt

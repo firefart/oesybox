@@ -1,4 +1,4 @@
-name: Update README
+name: Update Readme.md
 
 on:
   push:
@@ -12,17 +12,21 @@ concurrency:
   group: readme-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   update_readme:
-    timeout-minutes: 60
+    timeout-minutes: 30
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
     steps:
       - name: checkout sources
         uses: actions/checkout@v5
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: "stable"
 
       - name: Install Task
         uses: arduino/setup-task@v2
