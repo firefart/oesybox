@@ -1,0 +1,7 @@
+version: "3"
+
+tasks:
+  dev:
+    cmds:
+      - docker build --pull -t test -f Dockerfile .
+      - docker run --rm -it --entrypoint=/bin/busybox test

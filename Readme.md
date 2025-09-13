@@ -5,6 +5,6 @@
 ## Test locally
 
 ```bash
-docker build -t  test -f Dockerfile .
+docker build --pull -t test -f Dockerfile .
 docker run --rm -it test
 ```

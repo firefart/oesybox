@@ -168,6 +168,28 @@ alias zöh="wc"
 alias züntdiau="burnMMX"
 */
 
+/*
+Currently defined functions:
+[, [[, acpid, add-shell, addgroup, adduser, adjtimex, arch, arp, arping, ascii, ash, asphalt, aunleitung, auspockn, austausch, ausweis, awk, bam, base32, base64, basename, bc, beep, beweg,
+bittelassmichgehenichkommnichtraus, blkdiscard, blkid, blockdev, bootchartd, brctl, bunzip2, bzcat, bzip2, cal, cat, chat, chattr, chgrp, chmod, chown, chpasswd, chpst, chroot, chrt, chvt,
+chü, cksum, clear, cmp, comm, conspy, cp, cpio, crc32, crond, crontab, cryptpw, cttyhack, cut, date, dc, dd, deallocvt, delgroup, deluser, depmod, devmem, df, dhcprelay, diff, dirname,
+dmesg, dnsd, dnsdomainname, dos2unix, dpkg, dpkg-deb, drahdiham, du, dumpkmap, dumpleases, echo, ed, egrep, eject, env, envdir, envuidgid, erstö, ether-wake, expand, expr, factor,
+fakeidentd, fallocate, false, fatattr, fbset, fbsplash, fdflush, fdformat, fdisk, fgconsole, fgrep, find, findfs, flock, fold, free, freeramdisk, fsck, fsck.minix, fsfreeze, fstrim, fsync,
+ftpd, ftpget, ftpput, fuser, gehscheissn, gehsterbn, getfattr, getopt, getty, gruppn, gröwin, gunzip, gzip, halt, hd, hdparm, head, heisl, hexdump, hexedit, hostid, hostname, httpd, hush,
+hwclock, i2cdetect, i2cdump, i2cget, i2cset, i2ctransfer, ifconfig, ifdown, ifenslave, ifplugd, ifup, inetd, init, insmod, install, ionice, iostat, ip, ipaddr, ipcalc, ipcrm, ipcs, iplink,
+ipneigh, iproute, iprule, iptunnel, kbd_mode, killall5, klogd, last, less, link, linux32, linux64, linuxrc, ln, loadfont, loadkmap, logger, login, logname, logread, losetup, lpd, lpq, lpr,
+lsattr, lsmod, lsof, lspci, lsscsi, lsusb, lzcat, lzma, lzop, makedevs, makemime, md5sum, mdev, mesg, microcom, mim, mkdosfs, mke2fs, mkfifo, mkfs.ext2, mkfs.minix, mkfs.vfat, mknod,
+mkpasswd, mkswap, mktemp, modinfo, modprobe, more, mount, mountpoint, mpstat, mt, nameif, nanddump, nandwrite, nbd-client, nc, netstat, nice, nl, nmeter, nohup, nologin, nproc, nsenter,
+nslookup, ntpd, od, openvt, partprobe, passwd, paste, patch, pgrep, pidof, ping, ping6, pipe_progress, pivot_root, pkill, pmap, popmaildir, poweroff, powertop, printenv, printf, ps, pscan,
+pstree, pwdx, raidautorun, rdate, rdev, readahead, readlink, readprofile, realpath, reboot, reformime, remove-shell, renice, reset, resize, resume, rev, rmdir, rmmod, route, rpm, rpm2cpio,
+rtcwake, run-init, run-parts, runlevel, runsv, runsvdir, rx, script, scriptreplay, seedrng, sendmail, seq, setarch, setconsole, setfattr, setfont, setkeycodes, setlogcons, setpriv, setserial,
+setsid, setuidgid, sh, sha1sum, sha256sum, sha384sum, sha3sum, sha512sum, showkey, shred, shuf, slattach, smemcap, softlimit, sort, split, ssl_client, start-stop-daemon, stat, strings, stty,
+su, sulogin, sum, sv, svc, svlogd, svok, swapoff, swapon, switch_root, sync, sysctl, syslogd, tac, tail, taskset, tcpsvd, tee, telnet, telnetd, test, tftp, tftpd, time, timeout, top, touch,
+tr, traceroute, traceroute6, true, truncate, ts, tsort, tty, ttysize, tunctl, ubiattach, ubidetach, ubimkvol, ubirename, ubirmvol, ubirsvol, ubiupdatevol, udhcpc, udhcpc6, udhcpd, udpsvd,
+uevent, umount, uname, unexpand, uniq, unix2dos, unlink, unlzma, unshare, unxz, uptime, users, usleep, uudecode, uuencode, vconfig, vlock, volname, w, wall, watch, watchdog, wget, which, who,
+whoami, whois, wobini, xargs, xxd, xz, xzcat, yes, zcat, zcip, zoag
+*/
+
 var mapping = map[string]string{
 	"ls":       "zoag",
 	"tar":      "asphalt",
