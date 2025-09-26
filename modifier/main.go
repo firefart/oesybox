@@ -22,7 +22,7 @@ var regexApplet = regexp.MustCompile(`^(//applet:.+\(\s*APPLET[_A-Z0-9]*\()([^,]
 //usage:#define tree_trivial_usage NOUSAGE_STR
 //usage:#define tree_full_usage ""
 */
-var regexUsage = regexp.MustCompile(`^(\s*//usage:#define )([a-z0-9]+)(_[a-z0-9]+_usage\s*.*)$`)
+var regexUsage = regexp.MustCompile(`^(\s*//usage:#\s*define )([a-z0-9]+)(_[a-z0-9]+_usage\s*.*)$`)
 
 // exit(ls_main(/*argc_unused*/ 0, (char**) argv));
 // int id_main(int argc, char **argv) MAIN_EXTERNALLY_VISIBLE;
@@ -247,6 +247,9 @@ var mapping = map[string]string{
 	"wget":     "hoiowa",
 	"whois":    "undwersansiebitte",
 	"whoami":   "werbini",
+	"find":     "suach",
+	"ping":     "klopfau",
+	"bc":       "rechna",
 }
 
 func main() {
