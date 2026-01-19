@@ -22,7 +22,7 @@ docker run --rm -it test
 ## Commmands supported
 
 ```text
-BusyBox v1.38.0.git (2026-01-18 00:44:33 UTC) multi-call binary.
+BusyBox v1.38.0.git (2026-01-19 00:43:30 UTC) multi-call binary.
 BusyBox is copyrighted by many authors between 1998-2015.
 Licensed under GPLv2. See source distribution for detailed
 copyright notices.
@@ -86,7 +86,7 @@ Currently defined functions:
 	ubimkvol, ubirename, ubirmvol, ubirsvol, ubiupdatevol, udhcpc, udhcpc6,
 	udhcpd, udpsvd, uevent, umount, uname, undwersansiebitte, unexpand,
 	uniq, unix2dos, unlink, unlzma, unshare, unxz, uptime, users, usleep,
-	uudecode, uuencode, vagleich, vconfig, vlock, volname, w, wall,
+	uudecode, uuencode, vagleich, vconfig, vlock, vmstat, volname, w, wall,
 	watchdog, weniga, werbini, werhorcht, which, who, wobini, xargs, xxd,
 	xz, xzcat, yes, zcat, zcip, zoag, zoaga
 
