@@ -22,7 +22,7 @@ docker run --rm -it test
 ## Commmands supported
 
 ```text
-BusyBox v1.38.0.git (2026-01-30 00:46:36 UTC) multi-call binary.
+BusyBox v1.38.0.git (2026-01-31 00:44:18 UTC) multi-call binary.
 BusyBox is copyrighted by many authors between 1998-2015.
 Licensed under GPLv2. See source distribution for detailed
 copyright notices.
@@ -61,8 +61,8 @@ Currently defined functions:
 	ipcrm, ipcs, iplink, ipneigh, iproute, iprule, iptunnel, kbd_mode,
 	killall5, klogd, klopfau, kopf, kopier, kotz, last, link, linux32,
 	linux64, linuxrc, loadfont, loadkmap, logger, login, logname, logread,
-	losetup, lpd, lpq, lpr, lsattr, lsmod, lsof, lspci, lsscsi, lsusb,
-	lzcat, lzma, lzop, makedevs, makemime, md5sum, mdev, mehr, mesg,
+	losetup, lpd, lpq, lpr, lsattr, lsblk, lsmod, lsof, lspci, lsscsi,
+	lsusb, lzcat, lzma, lzop, makedevs, makemime, md5sum, mdev, mehr, mesg,
 	microcom, mim, mkdosfs, mke2fs, mkfifo, mkfs.ext2, mkfs.minix,
 	mkfs.vfat, mknod, mkpasswd, mkswap, mktemp, mochweg, modinfo, modprobe,
 	mountpoint, mpstat, mt, nameif, nanddump, nandwrite, nbd-client,
