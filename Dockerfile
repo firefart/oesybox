@@ -8,7 +8,7 @@ FROM ubuntu:latest AS builder
 RUN apt-get update && apt-get install -y --no-install-recommends \
   git \
   build-essential
-RUN git clone --depth 1 git://busybox.net/busybox.git /opt/busybox
+RUN git clone --depth 1 https://git.busybox.net/busybox/ /opt/busybox
 WORKDIR /opt/busybox
 COPY --from=go-builder /go/src/app/modifier /opt/modifier
 RUN /opt/modifier -path /opt/busybox
