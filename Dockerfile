@@ -7,8 +7,14 @@ RUN go build -a -o modifier -ldflags="-s -w" -trimpath
 FROM ubuntu:latest AS builder
 RUN apt-get update && apt-get install -y --no-install-recommends \
   git \
+  curl \
+  ca-certificates \
   build-essential
-RUN git clone --depth 1 https://git.busybox.net/busybox/ /opt/busybox
+# busybox git is down all the time and the autobuilds fail
+# RUN git clone --depth 1 https://git.busybox.net/busybox/ /opt/busybox
+RUN curl -L https://busybox.net/downloads/busybox-snapshot.tar.bz2 -o /tmp/busybox.tar.bz2 \
+  && tar -xjf /tmp/busybox.tar.bz2 -C /opt \
+  && rm -f /tmp/busybox.tar.bz2
 WORKDIR /opt/busybox
 COPY --from=go-builder /go/src/app/modifier /opt/modifier
 RUN /opt/modifier -path /opt/busybox
