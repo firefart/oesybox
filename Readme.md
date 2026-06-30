@@ -22,7 +22,7 @@ docker run --rm -it test
 ## Commmands supported
 
 ```text
-BusyBox v1.39.0.git (2026-06-29 01:18:57 UTC) multi-call binary.
+BusyBox v1.39.0.git (2026-06-30 01:13:30 UTC) multi-call binary.
 BusyBox is copyrighted by many authors between 1998-2015.
 Licensed under GPLv2. See source distribution for detailed
 copyright notices.
