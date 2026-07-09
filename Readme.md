@@ -22,7 +22,7 @@ docker run --rm -it test
 ## Commmands supported
 
 ```text
-BusyBox v1.39.0.git (2026-07-08 03:34:27 UTC) multi-call binary.
+BusyBox v1.39.0.git (2026-07-09 04:03:34 UTC) multi-call binary.
 BusyBox is copyrighted by many authors between 1998-2015.
 Licensed under GPLv2. See source distribution for detailed
 copyright notices.
@@ -58,17 +58,17 @@ Currently defined functions:
 	hoiowa, hostid, hostname, httpd, hush, hwclock, i2cdetect, i2cdump,
 	i2cget, i2cset, i2ctransfer, ifconfig, ifdown, ifenslave, ifplugd,
 	ifup, inetd, init, insmod, install, ionice, iostat, ip, ipaddr, ipcalc,
-	ipcrm, ipcs, iplink, ipneigh, iproute, iprule, iptunnel, kbd_mode,
-	killall5, klogd, klopfau, kopf, kopier, kotz, last, link, linux32,
-	linux64, linuxrc, loadfont, loadkmap, logger, login, logname, logread,
-	losetup, lpd, lpq, lpr, lsattr, lsblk, lsmod, lsof, lspci, lsscsi,
-	lsusb, lzcat, lzma, lzop, makedevs, makemime, md5sum, mdev, mehr, mesg,
-	microcom, mim, mkdosfs, mke2fs, mkfifo, mkfs.ext2, mkfs.minix,
-	mkfs.vfat, mknod, mkpasswd, mkswap, mktemp, mochweg, modinfo, modprobe,
-	mountpoint, mpstat, mt, nameif, nanddump, nandwrite, nbd-client,
-	netzkotz, nice, nl, nmeter, noamoi, nohup, nologin, nproc, nsenter,
-	nslookup, ntpd, od, openvt, partprobe, passauf, passwd, paste, patch,
-	pgrep, pidof, ping6, pipe_progress, pivot_root, pkill, pmap,
+	ipcrm, ipcs, iplink, ipneigh, iproute, iprule, iptunnel, join,
+	kbd_mode, killall5, klogd, klopfau, kopf, kopier, kotz, last, link,
+	linux32, linux64, linuxrc, loadfont, loadkmap, logger, login, logname,
+	logread, losetup, lpd, lpq, lpr, lsattr, lsblk, lsmod, lsof, lspci,
+	lsscsi, lsusb, lzcat, lzma, lzop, makedevs, makemime, md5sum, mdev,
+	mehr, mesg, microcom, mim, mkdosfs, mke2fs, mkfifo, mkfs.ext2,
+	mkfs.minix, mkfs.vfat, mknod, mkpasswd, mkswap, mktemp, mochweg,
+	modinfo, modprobe, mountpoint, mpstat, mt, nameif, nanddump, nandwrite,
+	nbd-client, netzkotz, nice, nl, nmeter, noamoi, nohup, nologin, nproc,
+	nsenter, nslookup, ntpd, od, openvt, partprobe, passauf, passwd, paste,
+	patch, pgrep, pidof, ping6, pipe_progress, pivot_root, pkill, pmap,
 	popmaildir, poweroff, powertop, printenv, printf, ps, pscan, pstree,
 	pwdx, raidautorun, rdate, rdev, readahead, readlink, readprofile,
 	realpath, reboot, rechna, reformime, remove-shell, renice, resize,
