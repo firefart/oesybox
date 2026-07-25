@@ -20,6 +20,7 @@ COPY --from=go-builder /go/src/app/modifier /opt/modifier
 RUN /opt/modifier -path /opt/busybox
 # Set   # CONFIG_TC is not defined
 # https://lists.busybox.net/pipermail/busybox-cvs/2024-January/041752.html
+ENV KCONFIG_NOTIMESTAMP=1
 RUN make defconfig && \
   sed -i 's/CONFIG_TC=y/# CONFIG_TC is not set/' .config && \
   sed -i 's/# CONFIG_STATIC is not set/CONFIG_STATIC=y/' .config && \
