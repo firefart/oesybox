@@ -18,6 +18,13 @@ RUN curl -L https://busybox.net/downloads/busybox-snapshot.tar.bz2 -o /tmp/busyb
 WORKDIR /opt/busybox
 COPY --from=go-builder /go/src/app/modifier /opt/modifier
 RUN /opt/modifier -path /opt/busybox
+# Upstream bug: archival/rpm.c commented out the `pagesize` member of
+# struct globals but still calls INIT_PAGESIZE(G.pagesize). That macro is a
+# no-op on fixed-pagesize arches (amd64) but breaks arm64/ppc64le. The value
+# is unused, so drop the calls as long as the member is commented out.
+RUN if grep -q '^//[[:space:]]*IF_VARIABLE_ARCH_PAGESIZE(unsigned pagesize;)' archival/rpm.c; then \
+  sed -i '/INIT_PAGESIZE(G\.pagesize);/d' archival/rpm.c; \
+  fi
 # Set   # CONFIG_TC is not defined
 # https://lists.busybox.net/pipermail/busybox-cvs/2024-January/041752.html
 ENV KCONFIG_NOTIMESTAMP=1
